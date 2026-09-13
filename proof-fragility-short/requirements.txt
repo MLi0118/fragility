@@ -1,0 +1,10 @@
+# Python 3.10
+vllm>=0.21
+torch
+transformers
+tokenizers
+xgboost>=2.0
+pandas
+numpy
+scikit-learn
+pexpect
