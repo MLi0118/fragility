@@ -1,0 +1,18 @@
+# openai/oss-20b-low (formalization validator) served by local vLLM.
+model: openai/gpt-oss-20b
+api: vllm
+n_gpus: 1
+max_model_len: 65536
+gpu_memory_utilization: 0.85
+max_tokens: 40960
+read_cost: 0.05
+write_cost: 0.2
+temperature: 1.0
+reasoning_effort: low
+system_prompt: |
+  You are ChatGPT, a large language model trained by OpenAI.
+tokenizer_kwargs:
+  reasoning_effort: low
+  model_identity: You are OpenAI GPT OSS.
+base_output_template: api
+effective_parameters: 3.6

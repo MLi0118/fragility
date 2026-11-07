@@ -1,0 +1,390 @@
+diff --git a/prover/components/prover.py b/prover/components/prover.py
+index 212a600..a988376 100644
+--- a/prover/components/prover.py
++++ b/prover/components/prover.py
+@@ -215,6 +215,15 @@ class ProverComponent(Component):
+         all_processed_records = []
+         all_inference_code_outputs = []
+ 
++        # repair_mode: "feedback" (theirs) | "predict_cut" | "random_cut" (fragility/repair.py)
++        repair_mode = self.config.get('repair_mode', 'feedback')
++        os.environ["PF_PROVER_ROUND"] = str(round_num)  # read by the vLLM output journal
++        cuts = {}
++        if round_num > 0 and repair_mode != 'feedback':
++            from fragility.repair import choose_cuts
++            cuts = choose_cuts(items_for_llm_processing, repair_mode, round_num,
++                               workers=self.config.get('cpu', 32))
++
+         records = []
+         # Use tqdm only if verbosity >= 1
+         iterator = items_for_llm_processing
+@@ -226,14 +235,18 @@ class ProverComponent(Component):
+             item_data["lean4_code"] = item_data["lean4_code"].split(":= by")[0] + ":= by sorry"
+             
+ 
+-            if not self._should_use_correction(round_num):
+-            #     if item_data["type"] == "theorem":
+-            #         template = self.base_axiom_template
+-            #     else:
+-                template = self.base_template
++            if round_num > 0 and repair_mode != 'feedback':
++                prompt_str, messages_for_this = self._prepare_cut_prompt(
++                    item_data, cuts.get(item_data.get("uid")), repair_mode, tokenizer)
+             else:
+-                template = self.correction_template
+-            prompt_str, messages_for_this = self._prepare_prompt(round_num, item_data, template, tokenizer)
++                if not self._should_use_correction(round_num):
++                #     if item_data["type"] == "theorem":
++                #         template = self.base_axiom_template
++                #     else:
++                    template = self.base_template
++                else:
++                    template = self.correction_template
++                prompt_str, messages_for_this = self._prepare_prompt(round_num, item_data, template, tokenizer)
+ 
+             if api == "vllm":
+                 num_tokens = len(tokenizer.tokenize(prompt_str))
+@@ -292,6 +305,7 @@ class ProverComponent(Component):
+                     "full_code": input_item["full_code"],
+                     "detailed_cost": detailed_cost,
+                     "model_config_path": model_config_path,
++                    "repair_cut": input_item.get("repair_cut"),
+                 }
+             else:
+                 # LEGACY: Use old problem_id based approach
+@@ -402,6 +416,27 @@ class ProverComponent(Component):
+ 
+         return text, messages
+ 
++    def _prepare_cut_prompt(self, data, cut, repair_mode, tokenizer):
++        """Fresh-attempt prompt, with the assistant turn prefilled by the kept
++        prefix of the previous failure. No cut (no parseable body) means j = 0
++        on the statement itself, i.e. a full regeneration."""
++        from fragility.repair import prefill_for
++        formal_statement = data["lean4_code"].split(":= by")[0] + ":= by sorry"
++        prompt = self.base_template.format(formal_statement=formal_statement,
++                                           informal_prefix=data.get("informal_prefix", ""))
++        if cut:
++            head, body, j = cut
++        else:
++            head, body, j = data["lean4_code"].split(":= by")[0] + ":= by", [], 0
++        data["repair_cut"] = {"mode": repair_mode, "j": j, "n": len(body)}
++        messages = [{"role": "user", "content": prompt},
++                    {"role": "assistant", "content": prefill_for(head, body, j), "prefill": True}]
++        text = ""
++        if tokenizer:
++            text = tokenizer.apply_chat_template(messages[:1], tokenize=False, add_generation_prompt=True)
++            text += messages[1]["content"]
++        return text, messages
++
+     def _compile(self, data_list, round_num=0):
+         verbosity = self.global_config.get('verbosity', 3)
+ 
+diff --git a/prover/query/api.py b/prover/query/api.py
+index 68503dd..a0c74a8 100644
+--- a/prover/query/api.py
++++ b/prover/query/api.py
+@@ -62,6 +62,98 @@ except ImportError:
+ # }]
+ 
+ 
++# One resident vLLM engine at a time. The prover builds a fresh APIQuery every
++# correction round; reusing the engine avoids a reload per round, and holding
++# at most one model is what lets all three fit a single 20 GB card in turn.
++_VLLM_CACHE = {}
++
++
++def release_vllm_models():
++    import gc
++    for key in list(_VLLM_CACHE):
++        llm = _VLLM_CACHE.pop(key)
++        # `del llm` alone leaves the EngineCore subprocess holding the memory
++        try:
++            llm.llm_engine.engine_core.shutdown()
++        except Exception:
++            pass
++        try:
++            del llm.llm_engine
++        except Exception:
++            pass
++        del llm
++    gc.collect()
++    try:
++        import torch
++        if torch.cuda.is_available():
++            torch.cuda.empty_cache()
++    except Exception:
++        pass
++
++
++def _vllm_key(model, llm_args):
++    return (model, tuple(sorted(llm_args.items())))
++
++
++def get_vllm_model(model, llm_args):
++    key = _vllm_key(model, llm_args)
++    if key not in _VLLM_CACHE:
++        release_vllm_models()
++        logger.info(f"Loading local vllm model `{model}` {llm_args}")
++        _VLLM_CACHE[key] = LLM(model=model, **llm_args)
++    return _VLLM_CACHE[key]
++
++
++class _OutputJournal:
++    """Append-only record of finished generations, so a run killed mid-batch
++    (vLLM can hang silently) resumes without regenerating what finished.
++
++    Enabled by PF_VLLM_JOURNAL=<path> for models whose name contains one of
++    PF_VLLM_JOURNAL_MODELS (comma-separated). Entries are keyed by prompt, and
++    identical prompts (breakdown samples) are a multiset: each entry answers
++    one occurrence, once per process."""
++
++    def __init__(self, path):
++        import hashlib
++        self._h = lambda model, prompt: hashlib.sha256(f"{model}\0{prompt}".encode()).hexdigest()
++        self.path, self.free = path, {}
++        if os.path.exists(path):
++            with open(path) as f:
++                for line in f:
++                    try:
++                        e = json.loads(line)
++                    except json.JSONDecodeError:
++                        continue  # torn last line from a kill
++                    self.free.setdefault(e["h"], []).append(e)
++            logger.info(f"Output journal {path}: {sum(map(len, self.free.values()))} saved generations")
++
++    def take(self, model, prompt):
++        entries = self.free.get(self._h(model, prompt))
++        return entries.pop(0) if entries else None
++
++    def add(self, model, prompt, text, inp, outp):
++        with open(self.path, "a") as f:
++            f.write(json.dumps({"h": self._h(model, prompt), "text": text, "inp": inp, "outp": outp}) + "\n")
++
++
++_JOURNAL = None
++
++
++def _journal_for(model):
++    global _JOURNAL
++    path = os.environ.get("PF_VLLM_JOURNAL")
++    models = [m for m in os.environ.get("PF_VLLM_JOURNAL_MODELS", "").split(",") if m]
++    if not path or not any(m in model for m in models):
++        return None
++    # PF_VLLM_JOURNAL_ROUND0=1: only the prover's first attempts go through the
++    # journal, so arms seeded with the same journal share them; repairs stay fresh.
++    if os.environ.get("PF_VLLM_JOURNAL_ROUND0") and os.environ.get("PF_PROVER_ROUND", "0") != "0":
++        return None
++    if _JOURNAL is None:
++        _JOURNAL = _OutputJournal(path)
++    return _JOURNAL
++
++
+ def encode_image(image_path):
+     image_type = image_path.split(".")[-1]
+     with open(image_path, "rb") as image_file:
+@@ -191,11 +283,46 @@ class APIQuery:
+             self.sampling_params = SamplingParams(
+                 **vllm_args
+             )
+-            self.vllm_model = LLM(
+-                model=self.model, tensor_parallel_size=4 if 'n_gpus' not in kwargs else kwargs['n_gpus']
+-            )
+-            if self.verbosity >= 1:
+-                logger.info(f"Loaded local vllm model `{self.model}`")
++            # Engine sizing must reach LLM(): without it vLLM loads at the model's
++            # full context and grabs 0.9 of the card, so the next stage OOMs.
++            llm_args = {"tensor_parallel_size": self.kwargs.pop("n_gpus", 4)}
++            for p in ("max_model_len", "gpu_memory_utilization", "quantization", "kv_cache_dtype"):
++                if p in self.kwargs:
++                    llm_args[p] = self.kwargs.pop(p)
++            # Loaded lazily via the `vllm_model` property: the formalizer builds its
++            # generator and validator queriers together but uses them in turn.
++            self._llm_args = llm_args
++
++    @property
++    def vllm_model(self):
++        # Report only; never load here (formalization probes it with hasattr
++        # right before deleting it). Generation loads via get_vllm_model.
++        return _VLLM_CACHE.get(_vllm_key(self.model, self._llm_args))
++
++    @vllm_model.deleter
++    def vllm_model(self):
++        release_vllm_models()
++
++    def cleanup(self):
++        # Their Component.unload_model() calls this, but it never existed, so no
++        # stage ever released its model.
++        if getattr(self, "api", None) == "vllm":
++            release_vllm_models()
++
++    def _render_vllm(self, messages):
++        """Chat-template a query. A final assistant message flagged `prefill`
++        is appended raw after the generation prompt, so the model continues it."""
++        prefill = ""
++        if messages and messages[-1].get("role") == "assistant" and messages[-1].get("prefill"):
++            prefill = messages[-1]["content"]
++            messages = messages[:-1]
++        text = self.tokenizer.apply_chat_template(
++            [{k: v for k, v in m.items() if k != "prefill"} for m in messages],
++            tokenize=False,
++            add_generation_prompt=True,
++            **self.tokenizer_kwargs
++        )
++        return text + prefill, prefill
+ 
+     def kwarg_remover(self, api, model, kwargs):
+         if any([kw in model for kw in ["o1", "o3", "o4"]]) and "temperature" in kwargs:
+@@ -305,14 +432,12 @@ class APIQuery:
+             logger.info(f"Running {len(queries_actual)} queries.")
+ 
+         if self.api == "vllm":
+-            queries_actual = [self.tokenizer.apply_chat_template(
+-                                        query[0],
+-                                        tokenize=False,
+-                                        add_generation_prompt=True,
+-                                        **self.tokenizer_kwargs
+-                                    ) for query in queries_actual]
++            rendered = [self._render_vllm(query[0]) for query in queries_actual]
++            queries_actual = [r[0] for r in rendered]
+             # Bypass threading and batch everything into one local generate
+-            yield from self._run_vllm_queries(queries_actual)
++            for idx, text, cost in self._run_vllm_queries(queries_actual):
++                # Return prefill + continuation so code extraction sees the whole proof
++                yield idx, rendered[idx][1] + text, cost
+             return
+         
+         if self.batch_processing:
+@@ -380,11 +505,56 @@ class APIQuery:
+         if self.verbosity >= 1:
+             logger.info(f"Running {len(tasks)} queries on local vllm…")
+         # Store full RequestOutput objects (not just CompletionOutput) to access prompt_token_ids
+-        request_outputs = []
+-        for batch in self.vllm_model.generate(tasks, sampling_params = self.sampling_params):
+-            request_outputs.append(batch)
+-
+-        for idx, request_output in enumerate(request_outputs):
++        engine = get_vllm_model(self.model, self._llm_args)
++        # vLLM rejects the whole batch if any prompt fills the context (a
++        # correction prompt carries the full failed proof), so those prompts get
++        # an empty answer and fail compilation instead.
++        limit = self._llm_args.get("max_model_len")
++        tok = engine.get_tokenizer()
++        fits = [i for i, t in enumerate(tasks)
++                if not limit or len(tok.encode(t["prompt"], add_special_tokens=False)) < limit]
++        if len(fits) < len(tasks):
++            logger.warning(f"{len(tasks) - len(fits)}/{len(tasks)} prompts exceed max_model_len={limit}; returning empty outputs")
++        journal = _journal_for(self.model)
++        saved = {}
++        if journal:
++            for i in fits:
++                e = journal.take(self.model, tasks[i]["prompt"])
++                if e:
++                    saved[i] = e
++            logger.info(f"Output journal: reusing {len(saved)}/{len(fits)} generations")
++        todo = [i for i in fits if i not in saved]
++        if journal and todo:
++            # LLM.generate only returns when the whole batch is done; record each
++            # request as the engine finishes it.
++            step = engine.llm_engine.step
++            def journaled_step():
++                outs = step()
++                for o in outs:
++                    if o.finished:
++                        journal.add(self.model, o.prompt, o.outputs[0].text,
++                                    len(o.prompt_token_ids or []), len(o.outputs[0].token_ids or []))
++                return outs
++            engine.llm_engine.step = journaled_step
++        try:
++            generated = dict(zip(todo, engine.generate([tasks[i] for i in todo], sampling_params = self.sampling_params) if todo else []))
++        finally:
++            if journal and todo:
++                del engine.llm_engine.step
++
++        for idx in range(len(tasks)):
++            if idx in saved:
++                e = saved[idx]
++                yield idx, e["text"], {"cost": (e["inp"]*self.read_cost + e["outp"]*self.write_cost)/1e6,
++                                       "input_tokens": e["inp"], "output_tokens": e["outp"],
++                                       "input_sflops": e["inp"] * self.effective_parameters,
++                                       "output_sflops": e["outp"] * self.effective_parameters}
++                continue
++            if idx not in generated:
++                yield idx, "", {"cost": 0, "input_tokens": 0, "output_tokens": 0,
++                                "input_sflops": 0, "output_sflops": 0}
++                continue
++            request_output = generated[idx]
+             # Get the first completion output (we only generate one per request)
+             out = request_output.outputs[0]
+             text = out.text
+diff --git a/prover/utils.py b/prover/utils.py
+index f7c1dc9..f1d4163 100755
+--- a/prover/utils.py
++++ b/prover/utils.py
+@@ -147,6 +147,8 @@ def process_for_correction(to_inference_data_prev_round, compilation_results_dat
+         raise Exception
+ 
+     print(len(to_inference_data_prev_round), "to_inference_data_prev_round items loaded.")
++    if not to_inference_data_prev_round:  # every prompt was over the length filter
++        return []
+ 
+     if "messages_history_list"  not in to_inference_data_prev_round[0]:
+         for d in to_inference_data_prev_round:
+diff --git a/seed_prover/components/breakdown_json.py b/seed_prover/components/breakdown_json.py
+index 4c5e1c4..33c8348 100644
+--- a/seed_prover/components/breakdown_json.py
++++ b/seed_prover/components/breakdown_json.py
+@@ -1,6 +1,7 @@
+ import os
+ import random
+ import json
++import re
+ from typing import Dict, Any
+ from pydantic import BaseModel, Field
+ from typing import List
+@@ -15,6 +16,36 @@ from metadata_utils import add_breakdown, generate_uid, copy_metadata
+ from utils import extract_lemma_dependencies
+ 
+ 
++def _strip_reasoning_channels(content):
++    """Return just the final answer from a reasoning model's raw output.
++
++    gpt-oss emits OpenAI "harmony" channels: a long `analysis` chain-of-thought,
++    then the answer in a `final` channel, separated by the literal
++    `assistantfinal` once special tokens are decoded. Through the Together API
++    (their default `api: together`) the server splits these and returns only the
++    final content, so json.loads() worked directly.
++
++    Through LOCAL vLLM the offline LLM class returns the raw concatenation --
++    vLLM's --reasoning-parser only applies in OpenAI-server mode -- so the parser
++    meets 35k characters of reasoning prose at char 0 and fails with
++    "Expecting value: line 1 column 1 (char 0)" on every sample.
++
++    Also strips the markdown fence the model wraps the JSON in. No-ops on content
++    that is already clean, so the Together path is unaffected.
++    """
++    if not isinstance(content, str):
++        return content
++    marker = "assistantfinal"
++    if marker in content:
++        content = content.rsplit(marker, 1)[1]
++    content = content.strip()
++    if content.startswith("```"):
++        content = re.sub(r"^```[a-zA-Z]*\s*", "", content)
++        if content.rstrip().endswith("```"):
++            content = content.rstrip()[:-3]
++    return content.strip()
++
++
+ class Lemma(BaseModel):
+     id: int = Field(..., description="The unique number identifier for the lemma (e.g., 1, 2).")
+     statement: str = Field(..., description="The mathematical statement of the lemma.")
+@@ -48,7 +79,7 @@ class BreakdownJsonComponent(Component):
+     def parse_breakdown(self, content: str) -> Dict[str, Any]:
+         """Parse JSON breakdown from LLM response."""
+         try:
+-            data = json.loads(content)
++            data = json.loads(_strip_reasoning_channels(content))
+             # Normalize lemma IDs to be sequential
+             lemmas = data.get("lemmas", [])
+             for idx, lemma in enumerate(lemmas, start=1):

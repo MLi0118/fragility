@@ -1,0 +1,1282 @@
+{
+ "full85_feedback": {
+  "n_solved": 12,
+  "solved": [
+   "putnam_1967_b2",
+   "putnam_1968_a2",
+   "putnam_1977_a3",
+   "putnam_1986_a1",
+   "putnam_1986_a2",
+   "putnam_1986_b1",
+   "putnam_1988_b1",
+   "putnam_1988_b2",
+   "putnam_1990_a1",
+   "putnam_1999_a1",
+   "putnam_2001_a1",
+   "putnam_2008_a1"
+  ],
+  "tokens": {
+   "attempts": 920,
+   "repairs": 482,
+   "input": 2199319,
+   "output": 2964692,
+   "repair_input": 1612950,
+   "repair_output": 1077736
+  },
+  "simulation": {
+   "n_problems": 84,
+   "n_seeds": 32,
+   "configs": [
+    {
+     "breakdowns": 1,
+     "k": 1,
+     "solved": 5.78,
+     "input_tokens": 7583208,
+     "output_tokens": 3819197
+    },
+    {
+     "breakdowns": 1,
+     "k": 2,
+     "solved": 6.31,
+     "input_tokens": 7694556,
+     "output_tokens": 3904347
+    },
+    {
+     "breakdowns": 1,
+     "k": 3,
+     "solved": 6.66,
+     "input_tokens": 7765357,
+     "output_tokens": 3956558
+    },
+    {
+     "breakdowns": 1,
+     "k": 4,
+     "solved": 6.66,
+     "input_tokens": 7824359,
+     "output_tokens": 4001490
+    },
+    {
+     "breakdowns": 1,
+     "k": 5,
+     "solved": 6.66,
+     "input_tokens": 7875667,
+     "output_tokens": 4037268
+    },
+    {
+     "breakdowns": 1,
+     "k": 6,
+     "solved": 6.66,
+     "input_tokens": 7923462,
+     "output_tokens": 4069530
+    },
+    {
+     "breakdowns": 1,
+     "k": 7,
+     "solved": 6.66,
+     "input_tokens": 7969257,
+     "output_tokens": 4103890
+    },
+    {
+     "breakdowns": 1,
+     "k": 8,
+     "solved": 6.66,
+     "input_tokens": 8010822,
+     "output_tokens": 4132216
+    },
+    {
+     "breakdowns": 2,
+     "k": 1,
+     "solved": 8.34,
+     "input_tokens": 14560579,
+     "output_tokens": 7289219
+    },
+    {
+     "breakdowns": 2,
+     "k": 2,
+     "solved": 8.72,
+     "input_tokens": 14746912,
+     "output_tokens": 7436279
+    },
+    {
+     "breakdowns": 2,
+     "k": 3,
+     "solved": 9.47,
+     "input_tokens": 14876616,
+     "output_tokens": 7532066
+    },
+    {
+     "breakdowns": 2,
+     "k": 4,
+     "solved": 9.47,
+     "input_tokens": 14989233,
+     "output_tokens": 7616816
+    },
+    {
+     "breakdowns": 2,
+     "k": 5,
+     "solved": 9.47,
+     "input_tokens": 15086786,
+     "output_tokens": 7684756
+    },
+    {
+     "breakdowns": 2,
+     "k": 6,
+     "solved": 9.47,
+     "input_tokens": 15174567,
+     "output_tokens": 7748313
+    },
+    {
+     "breakdowns": 2,
+     "k": 7,
+     "solved": 9.47,
+     "input_tokens": 15257467,
+     "output_tokens": 7809249
+    },
+    {
+     "breakdowns": 2,
+     "k": 8,
+     "solved": 9.47,
+     "input_tokens": 15332798,
+     "output_tokens": 7860288
+    },
+    {
+     "breakdowns": 3,
+     "k": 1,
+     "solved": 10.03,
+     "input_tokens": 20768058,
+     "output_tokens": 10407615
+    },
+    {
+     "breakdowns": 3,
+     "k": 2,
+     "solved": 10.03,
+     "input_tokens": 21011002,
+     "output_tokens": 10610657
+    },
+    {
+     "breakdowns": 3,
+     "k": 3,
+     "solved": 10.84,
+     "input_tokens": 21175253,
+     "output_tokens": 10729491
+    },
+    {
+     "breakdowns": 3,
+     "k": 4,
+     "solved": 10.84,
+     "input_tokens": 21335869,
+     "output_tokens": 10850844
+    },
+    {
+     "breakdowns": 3,
+     "k": 5,
+     "solved": 10.84,
+     "input_tokens": 21475023,
+     "output_tokens": 10947581
+    },
+    {
+     "breakdowns": 3,
+     "k": 6,
+     "solved": 10.84,
+     "input_tokens": 21599118,
+     "output_tokens": 11038244
+    },
+    {
+     "breakdowns": 3,
+     "k": 7,
+     "solved": 10.84,
+     "input_tokens": 21715607,
+     "output_tokens": 11124625
+    },
+    {
+     "breakdowns": 3,
+     "k": 8,
+     "solved": 10.84,
+     "input_tokens": 21820813,
+     "output_tokens": 11195759
+    },
+    {
+     "breakdowns": 4,
+     "k": 1,
+     "solved": 11.0,
+     "input_tokens": 25009650,
+     "output_tokens": 12575449
+    },
+    {
+     "breakdowns": 4,
+     "k": 2,
+     "solved": 11.0,
+     "input_tokens": 25310963,
+     "output_tokens": 12824622
+    },
+    {
+     "breakdowns": 4,
+     "k": 3,
+     "solved": 12.0,
+     "input_tokens": 25487443,
+     "output_tokens": 12947885
+    },
+    {
+     "breakdowns": 4,
+     "k": 4,
+     "solved": 12.0,
+     "input_tokens": 25681480,
+     "output_tokens": 13093062
+    },
+    {
+     "breakdowns": 4,
+     "k": 5,
+     "solved": 12.0,
+     "input_tokens": 25850499,
+     "output_tokens": 13211606
+    },
+    {
+     "breakdowns": 4,
+     "k": 6,
+     "solved": 12.0,
+     "input_tokens": 26000657,
+     "output_tokens": 13321228
+    },
+    {
+     "breakdowns": 4,
+     "k": 7,
+     "solved": 12.0,
+     "input_tokens": 26141398,
+     "output_tokens": 13426118
+    },
+    {
+     "breakdowns": 4,
+     "k": 8,
+     "solved": 12.0,
+     "input_tokens": 26268383,
+     "output_tokens": 13511290
+    }
+   ]
+  }
+ },
+ "full85_predict_cut": {
+  "n_solved": 16,
+  "solved": [
+   "putnam_1965_a6",
+   "putnam_1965_b3",
+   "putnam_1967_b2",
+   "putnam_1968_a2",
+   "putnam_1977_a3",
+   "putnam_1984_b2",
+   "putnam_1986_a1",
+   "putnam_1986_a2",
+   "putnam_1986_b1",
+   "putnam_1988_b1",
+   "putnam_1988_b2",
+   "putnam_1990_a1",
+   "putnam_1999_a1",
+   "putnam_2000_a2",
+   "putnam_2001_a1",
+   "putnam_2008_a1"
+  ],
+  "tokens": {
+   "attempts": 2695,
+   "repairs": 2163,
+   "input": 4724519,
+   "output": 5464066,
+   "repair_input": 4079566,
+   "repair_output": 2949906
+  },
+  "simulation": {
+   "n_problems": 84,
+   "n_seeds": 32,
+   "configs": [
+    {
+     "breakdowns": 1,
+     "k": 1,
+     "solved": 6.81,
+     "input_tokens": 7582362,
+     "output_tokens": 3822481
+    },
+    {
+     "breakdowns": 1,
+     "k": 2,
+     "solved": 7.94,
+     "input_tokens": 7761381,
+     "output_tokens": 4050584
+    },
+    {
+     "breakdowns": 1,
+     "k": 3,
+     "solved": 8.22,
+     "input_tokens": 7928346,
+     "output_tokens": 4217381
+    },
+    {
+     "breakdowns": 1,
+     "k": 4,
+     "solved": 8.22,
+     "input_tokens": 8096532,
+     "output_tokens": 4376214
+    },
+    {
+     "breakdowns": 1,
+     "k": 5,
+     "solved": 8.22,
+     "input_tokens": 8256440,
+     "output_tokens": 4494343
+    },
+    {
+     "breakdowns": 1,
+     "k": 6,
+     "solved": 8.22,
+     "input_tokens": 8420394,
+     "output_tokens": 4624247
+    },
+    {
+     "breakdowns": 1,
+     "k": 7,
+     "solved": 8.22,
+     "input_tokens": 8578108,
+     "output_tokens": 4741322
+    },
+    {
+     "breakdowns": 1,
+     "k": 8,
+     "solved": 8.22,
+     "input_tokens": 8728998,
+     "output_tokens": 4855785
+    },
+    {
+     "breakdowns": 2,
+     "k": 1,
+     "solved": 10.47,
+     "input_tokens": 14451739,
+     "output_tokens": 7236993
+    },
+    {
+     "breakdowns": 2,
+     "k": 2,
+     "solved": 11.59,
+     "input_tokens": 14673309,
+     "output_tokens": 7601657
+    },
+    {
+     "breakdowns": 2,
+     "k": 3,
+     "solved": 12.03,
+     "input_tokens": 14979349,
+     "output_tokens": 7909362
+    },
+    {
+     "breakdowns": 2,
+     "k": 4,
+     "solved": 12.03,
+     "input_tokens": 15313266,
+     "output_tokens": 8231227
+    },
+    {
+     "breakdowns": 2,
+     "k": 5,
+     "solved": 12.03,
+     "input_tokens": 15628877,
+     "output_tokens": 8465399
+    },
+    {
+     "breakdowns": 2,
+     "k": 6,
+     "solved": 12.03,
+     "input_tokens": 15950834,
+     "output_tokens": 8714637
+    },
+    {
+     "breakdowns": 2,
+     "k": 7,
+     "solved": 12.03,
+     "input_tokens": 16256098,
+     "output_tokens": 8944072
+    },
+    {
+     "breakdowns": 2,
+     "k": 8,
+     "solved": 12.03,
+     "input_tokens": 16555041,
+     "output_tokens": 9167743
+    },
+    {
+     "breakdowns": 3,
+     "k": 1,
+     "solved": 12.72,
+     "input_tokens": 20458209,
+     "output_tokens": 10250664
+    },
+    {
+     "breakdowns": 3,
+     "k": 2,
+     "solved": 13.59,
+     "input_tokens": 20730889,
+     "output_tokens": 10752598
+    },
+    {
+     "breakdowns": 3,
+     "k": 3,
+     "solved": 14.28,
+     "input_tokens": 21145904,
+     "output_tokens": 11186070
+    },
+    {
+     "breakdowns": 3,
+     "k": 4,
+     "solved": 14.28,
+     "input_tokens": 21628411,
+     "output_tokens": 11655322
+    },
+    {
+     "breakdowns": 3,
+     "k": 5,
+     "solved": 14.28,
+     "input_tokens": 22084367,
+     "output_tokens": 12003418
+    },
+    {
+     "breakdowns": 3,
+     "k": 6,
+     "solved": 14.28,
+     "input_tokens": 22548265,
+     "output_tokens": 12373464
+    },
+    {
+     "breakdowns": 3,
+     "k": 7,
+     "solved": 14.28,
+     "input_tokens": 22983538,
+     "output_tokens": 12710383
+    },
+    {
+     "breakdowns": 3,
+     "k": 8,
+     "solved": 14.28,
+     "input_tokens": 23412590,
+     "output_tokens": 13037846
+    },
+    {
+     "breakdowns": 4,
+     "k": 1,
+     "solved": 14.0,
+     "input_tokens": 24577546,
+     "output_tokens": 12345691
+    },
+    {
+     "breakdowns": 4,
+     "k": 2,
+     "solved": 15.0,
+     "input_tokens": 24898747,
+     "output_tokens": 12941709
+    },
+    {
+     "breakdowns": 4,
+     "k": 3,
+     "solved": 16.0,
+     "input_tokens": 25355243,
+     "output_tokens": 13435026
+    },
+    {
+     "breakdowns": 4,
+     "k": 4,
+     "solved": 16.0,
+     "input_tokens": 25943341,
+     "output_tokens": 13994790
+    },
+    {
+     "breakdowns": 4,
+     "k": 5,
+     "solved": 16.0,
+     "input_tokens": 26496634,
+     "output_tokens": 14408920
+    },
+    {
+     "breakdowns": 4,
+     "k": 6,
+     "solved": 16.0,
+     "input_tokens": 27056051,
+     "output_tokens": 14852297
+    },
+    {
+     "breakdowns": 4,
+     "k": 7,
+     "solved": 16.0,
+     "input_tokens": 27582318,
+     "output_tokens": 15253437
+    },
+    {
+     "breakdowns": 4,
+     "k": 8,
+     "solved": 16.0,
+     "input_tokens": 28105310,
+     "output_tokens": 15644037
+    }
+   ]
+  }
+ },
+ "full85_random_cut": {
+  "n_solved": 11,
+  "solved": [
+   "putnam_1967_b2",
+   "putnam_1977_a3",
+   "putnam_1986_a1",
+   "putnam_1986_a2",
+   "putnam_1986_b1",
+   "putnam_1988_b1",
+   "putnam_1988_b2",
+   "putnam_1990_a1",
+   "putnam_1999_a1",
+   "putnam_2001_a1",
+   "putnam_2008_a1"
+  ],
+  "tokens": {
+   "attempts": 2661,
+   "repairs": 2157,
+   "input": 5246879,
+   "output": 4666364,
+   "repair_input": 4621185,
+   "repair_output": 2346738
+  },
+  "simulation": {
+   "n_problems": 84,
+   "n_seeds": 32,
+   "configs": [
+    {
+     "breakdowns": 1,
+     "k": 1,
+     "solved": 5.34,
+     "input_tokens": 7582625,
+     "output_tokens": 3830985
+    },
+    {
+     "breakdowns": 1,
+     "k": 2,
+     "solved": 5.59,
+     "input_tokens": 7766810,
+     "output_tokens": 3986743
+    },
+    {
+     "breakdowns": 1,
+     "k": 3,
+     "solved": 6.03,
+     "input_tokens": 7955557,
+     "output_tokens": 4113061
+    },
+    {
+     "breakdowns": 1,
+     "k": 4,
+     "solved": 6.34,
+     "input_tokens": 8148870,
+     "output_tokens": 4241536
+    },
+    {
+     "breakdowns": 1,
+     "k": 5,
+     "solved": 6.63,
+     "input_tokens": 8332049,
+     "output_tokens": 4341683
+    },
+    {
+     "breakdowns": 1,
+     "k": 6,
+     "solved": 6.94,
+     "input_tokens": 8506287,
+     "output_tokens": 4430908
+    },
+    {
+     "breakdowns": 1,
+     "k": 7,
+     "solved": 6.94,
+     "input_tokens": 8694510,
+     "output_tokens": 4531126
+    },
+    {
+     "breakdowns": 1,
+     "k": 8,
+     "solved": 6.94,
+     "input_tokens": 8876852,
+     "output_tokens": 4621861
+    },
+    {
+     "breakdowns": 2,
+     "k": 1,
+     "solved": 8.53,
+     "input_tokens": 14563535,
+     "output_tokens": 7317537
+    },
+    {
+     "breakdowns": 2,
+     "k": 2,
+     "solved": 8.72,
+     "input_tokens": 14903601,
+     "output_tokens": 7620093
+    },
+    {
+     "breakdowns": 2,
+     "k": 3,
+     "solved": 9.13,
+     "input_tokens": 15245730,
+     "output_tokens": 7850772
+    },
+    {
+     "breakdowns": 2,
+     "k": 4,
+     "solved": 9.28,
+     "input_tokens": 15563316,
+     "output_tokens": 8082662
+    },
+    {
+     "breakdowns": 2,
+     "k": 5,
+     "solved": 9.28,
+     "input_tokens": 15890118,
+     "output_tokens": 8270186
+    },
+    {
+     "breakdowns": 2,
+     "k": 6,
+     "solved": 9.44,
+     "input_tokens": 16214512,
+     "output_tokens": 8437762
+    },
+    {
+     "breakdowns": 2,
+     "k": 7,
+     "solved": 9.44,
+     "input_tokens": 16585690,
+     "output_tokens": 8634060
+    },
+    {
+     "breakdowns": 2,
+     "k": 8,
+     "solved": 9.44,
+     "input_tokens": 16949255,
+     "output_tokens": 8818620
+    },
+    {
+     "breakdowns": 3,
+     "k": 1,
+     "solved": 10.22,
+     "input_tokens": 20730857,
+     "output_tokens": 10436028
+    },
+    {
+     "breakdowns": 3,
+     "k": 2,
+     "solved": 10.22,
+     "input_tokens": 21203769,
+     "output_tokens": 10877527
+    },
+    {
+     "breakdowns": 3,
+     "k": 3,
+     "solved": 10.41,
+     "input_tokens": 21686839,
+     "output_tokens": 11202853
+    },
+    {
+     "breakdowns": 3,
+     "k": 4,
+     "solved": 10.41,
+     "input_tokens": 22152384,
+     "output_tokens": 11538785
+    },
+    {
+     "breakdowns": 3,
+     "k": 5,
+     "solved": 10.41,
+     "input_tokens": 22643944,
+     "output_tokens": 11819922
+    },
+    {
+     "breakdowns": 3,
+     "k": 6,
+     "solved": 10.41,
+     "input_tokens": 23111517,
+     "output_tokens": 12060799
+    },
+    {
+     "breakdowns": 3,
+     "k": 7,
+     "solved": 10.41,
+     "input_tokens": 23654027,
+     "output_tokens": 12350428
+    },
+    {
+     "breakdowns": 3,
+     "k": 8,
+     "solved": 10.41,
+     "input_tokens": 24183739,
+     "output_tokens": 12619790
+    },
+    {
+     "breakdowns": 4,
+     "k": 1,
+     "solved": 11.0,
+     "input_tokens": 24951822,
+     "output_tokens": 12604384
+    },
+    {
+     "breakdowns": 4,
+     "k": 2,
+     "solved": 11.0,
+     "input_tokens": 25537489,
+     "output_tokens": 13151637
+    },
+    {
+     "breakdowns": 4,
+     "k": 3,
+     "solved": 11.0,
+     "input_tokens": 26138542,
+     "output_tokens": 13545726
+    },
+    {
+     "breakdowns": 4,
+     "k": 4,
+     "solved": 11.0,
+     "input_tokens": 26723989,
+     "output_tokens": 13964672
+    },
+    {
+     "breakdowns": 4,
+     "k": 5,
+     "solved": 11.0,
+     "input_tokens": 27329419,
+     "output_tokens": 14310026
+    },
+    {
+     "breakdowns": 4,
+     "k": 6,
+     "solved": 11.0,
+     "input_tokens": 27905457,
+     "output_tokens": 14606717
+    },
+    {
+     "breakdowns": 4,
+     "k": 7,
+     "solved": 11.0,
+     "input_tokens": 28560466,
+     "output_tokens": 14943253
+    },
+    {
+     "breakdowns": 4,
+     "k": 8,
+     "solved": 11.0,
+     "input_tokens": 29211897,
+     "output_tokens": 15269749
+    }
+   ]
+  }
+ },
+ "full85s_predict_cut": {
+  "n_solved": 13,
+  "solved": [
+   "putnam_1967_b2",
+   "putnam_1968_a2",
+   "putnam_1977_a3",
+   "putnam_1986_a1",
+   "putnam_1986_a2",
+   "putnam_1986_b1",
+   "putnam_1988_b1",
+   "putnam_1988_b2",
+   "putnam_1990_a1",
+   "putnam_1998_b1",
+   "putnam_1999_a1",
+   "putnam_2001_a1",
+   "putnam_2008_a1"
+  ],
+  "tokens": {
+   "attempts": 2690,
+   "repairs": 2163,
+   "input": 4882551,
+   "output": 5504630,
+   "repair_input": 4241115,
+   "repair_output": 3069450
+  },
+  "simulation": {
+   "n_problems": 84,
+   "n_seeds": 32,
+   "configs": [
+    {
+     "breakdowns": 1,
+     "k": 1,
+     "solved": 5.78,
+     "input_tokens": 7583208,
+     "output_tokens": 3819197
+    },
+    {
+     "breakdowns": 1,
+     "k": 2,
+     "solved": 7.13,
+     "input_tokens": 7757133,
+     "output_tokens": 4026695
+    },
+    {
+     "breakdowns": 1,
+     "k": 3,
+     "solved": 7.47,
+     "input_tokens": 7937143,
+     "output_tokens": 4237799
+    },
+    {
+     "breakdowns": 1,
+     "k": 4,
+     "solved": 7.47,
+     "input_tokens": 8112224,
+     "output_tokens": 4409110
+    },
+    {
+     "breakdowns": 1,
+     "k": 5,
+     "solved": 7.47,
+     "input_tokens": 8285298,
+     "output_tokens": 4535524
+    },
+    {
+     "breakdowns": 1,
+     "k": 6,
+     "solved": 7.88,
+     "input_tokens": 8454366,
+     "output_tokens": 4653242
+    },
+    {
+     "breakdowns": 1,
+     "k": 7,
+     "solved": 7.88,
+     "input_tokens": 8616564,
+     "output_tokens": 4777451
+    },
+    {
+     "breakdowns": 1,
+     "k": 8,
+     "solved": 7.88,
+     "input_tokens": 8779818,
+     "output_tokens": 4877789
+    },
+    {
+     "breakdowns": 2,
+     "k": 1,
+     "solved": 8.34,
+     "input_tokens": 14560579,
+     "output_tokens": 7289219
+    },
+    {
+     "breakdowns": 2,
+     "k": 2,
+     "solved": 9.88,
+     "input_tokens": 14776531,
+     "output_tokens": 7637993
+    },
+    {
+     "breakdowns": 2,
+     "k": 3,
+     "solved": 10.31,
+     "input_tokens": 15109710,
+     "output_tokens": 8023919
+    },
+    {
+     "breakdowns": 2,
+     "k": 4,
+     "solved": 10.31,
+     "input_tokens": 15450502,
+     "output_tokens": 8340321
+    },
+    {
+     "breakdowns": 2,
+     "k": 5,
+     "solved": 10.31,
+     "input_tokens": 15794905,
+     "output_tokens": 8604160
+    },
+    {
+     "breakdowns": 2,
+     "k": 6,
+     "solved": 11.0,
+     "input_tokens": 16108093,
+     "output_tokens": 8821795
+    },
+    {
+     "breakdowns": 2,
+     "k": 7,
+     "solved": 11.0,
+     "input_tokens": 16426930,
+     "output_tokens": 9071235
+    },
+    {
+     "breakdowns": 2,
+     "k": 8,
+     "solved": 11.0,
+     "input_tokens": 16742702,
+     "output_tokens": 9263333
+    },
+    {
+     "breakdowns": 3,
+     "k": 1,
+     "solved": 10.03,
+     "input_tokens": 20768058,
+     "output_tokens": 10407615
+    },
+    {
+     "breakdowns": 3,
+     "k": 2,
+     "solved": 11.41,
+     "input_tokens": 21018299,
+     "output_tokens": 10884983
+    },
+    {
+     "breakdowns": 3,
+     "k": 3,
+     "solved": 11.41,
+     "input_tokens": 21474910,
+     "output_tokens": 11423712
+    },
+    {
+     "breakdowns": 3,
+     "k": 4,
+     "solved": 11.41,
+     "input_tokens": 21965074,
+     "output_tokens": 11877824
+    },
+    {
+     "breakdowns": 3,
+     "k": 5,
+     "solved": 11.41,
+     "input_tokens": 22467187,
+     "output_tokens": 12273695
+    },
+    {
+     "breakdowns": 3,
+     "k": 6,
+     "solved": 12.22,
+     "input_tokens": 22899160,
+     "output_tokens": 12573670
+    },
+    {
+     "breakdowns": 3,
+     "k": 7,
+     "solved": 12.22,
+     "input_tokens": 23359882,
+     "output_tokens": 12933293
+    },
+    {
+     "breakdowns": 3,
+     "k": 8,
+     "solved": 12.22,
+     "input_tokens": 23815389,
+     "output_tokens": 13216754
+    },
+    {
+     "breakdowns": 4,
+     "k": 1,
+     "solved": 11.0,
+     "input_tokens": 25009650,
+     "output_tokens": 12575449
+    },
+    {
+     "breakdowns": 4,
+     "k": 2,
+     "solved": 12.0,
+     "input_tokens": 25284459,
+     "output_tokens": 13140449
+    },
+    {
+     "breakdowns": 4,
+     "k": 3,
+     "solved": 12.0,
+     "input_tokens": 25846912,
+     "output_tokens": 13779875
+    },
+    {
+     "breakdowns": 4,
+     "k": 4,
+     "solved": 12.0,
+     "input_tokens": 26450000,
+     "output_tokens": 14337407
+    },
+    {
+     "breakdowns": 4,
+     "k": 5,
+     "solved": 12.0,
+     "input_tokens": 27059251,
+     "output_tokens": 14817849
+    },
+    {
+     "breakdowns": 4,
+     "k": 6,
+     "solved": 13.0,
+     "input_tokens": 27568308,
+     "output_tokens": 15153888
+    },
+    {
+     "breakdowns": 4,
+     "k": 7,
+     "solved": 13.0,
+     "input_tokens": 28132178,
+     "output_tokens": 15594917
+    },
+    {
+     "breakdowns": 4,
+     "k": 8,
+     "solved": 13.0,
+     "input_tokens": 28691881,
+     "output_tokens": 15950925
+    }
+   ]
+  }
+ },
+ "full85s_random_cut": {
+  "n_solved": 13,
+  "solved": [
+   "putnam_1965_a6",
+   "putnam_1967_b2",
+   "putnam_1977_a3",
+   "putnam_1986_a1",
+   "putnam_1986_a2",
+   "putnam_1986_b1",
+   "putnam_1988_b1",
+   "putnam_1988_b2",
+   "putnam_1990_a1",
+   "putnam_1998_b1",
+   "putnam_1999_a1",
+   "putnam_2001_a1",
+   "putnam_2008_a1"
+  ],
+  "tokens": {
+   "attempts": 2599,
+   "repairs": 2103,
+   "input": 5141079,
+   "output": 4561154,
+   "repair_input": 4518374,
+   "repair_output": 2342901
+  },
+  "simulation": {
+   "n_problems": 84,
+   "n_seeds": 32,
+   "configs": [
+    {
+     "breakdowns": 1,
+     "k": 1,
+     "solved": 5.78,
+     "input_tokens": 7583208,
+     "output_tokens": 3819197
+    },
+    {
+     "breakdowns": 1,
+     "k": 2,
+     "solved": 6.22,
+     "input_tokens": 7763530,
+     "output_tokens": 3968645
+    },
+    {
+     "breakdowns": 1,
+     "k": 3,
+     "solved": 7.09,
+     "input_tokens": 7949169,
+     "output_tokens": 4108644
+    },
+    {
+     "breakdowns": 1,
+     "k": 4,
+     "solved": 7.22,
+     "input_tokens": 8130707,
+     "output_tokens": 4225821
+    },
+    {
+     "breakdowns": 1,
+     "k": 5,
+     "solved": 7.22,
+     "input_tokens": 8315661,
+     "output_tokens": 4342712
+    },
+    {
+     "breakdowns": 1,
+     "k": 6,
+     "solved": 7.34,
+     "input_tokens": 8491046,
+     "output_tokens": 4435380
+    },
+    {
+     "breakdowns": 1,
+     "k": 7,
+     "solved": 7.34,
+     "input_tokens": 8678979,
+     "output_tokens": 4528836
+    },
+    {
+     "breakdowns": 1,
+     "k": 8,
+     "solved": 7.34,
+     "input_tokens": 8863485,
+     "output_tokens": 4599780
+    },
+    {
+     "breakdowns": 2,
+     "k": 1,
+     "solved": 8.34,
+     "input_tokens": 14560579,
+     "output_tokens": 7289219
+    },
+    {
+     "breakdowns": 2,
+     "k": 2,
+     "solved": 8.66,
+     "input_tokens": 14836566,
+     "output_tokens": 7562462
+    },
+    {
+     "breakdowns": 2,
+     "k": 3,
+     "solved": 9.81,
+     "input_tokens": 15102140,
+     "output_tokens": 7769367
+    },
+    {
+     "breakdowns": 2,
+     "k": 4,
+     "solved": 10.0,
+     "input_tokens": 15452693,
+     "output_tokens": 7998619
+    },
+    {
+     "breakdowns": 2,
+     "k": 5,
+     "solved": 10.0,
+     "input_tokens": 15809602,
+     "output_tokens": 8224406
+    },
+    {
+     "breakdowns": 2,
+     "k": 6,
+     "solved": 10.19,
+     "input_tokens": 16152891,
+     "output_tokens": 8396921
+    },
+    {
+     "breakdowns": 2,
+     "k": 7,
+     "solved": 10.19,
+     "input_tokens": 16529683,
+     "output_tokens": 8582538
+    },
+    {
+     "breakdowns": 2,
+     "k": 8,
+     "solved": 10.19,
+     "input_tokens": 16886819,
+     "output_tokens": 8725270
+    },
+    {
+     "breakdowns": 3,
+     "k": 1,
+     "solved": 10.03,
+     "input_tokens": 20768058,
+     "output_tokens": 10407615
+    },
+    {
+     "breakdowns": 3,
+     "k": 2,
+     "solved": 10.22,
+     "input_tokens": 21147065,
+     "output_tokens": 10800464
+    },
+    {
+     "breakdowns": 3,
+     "k": 3,
+     "solved": 11.69,
+     "input_tokens": 21473582,
+     "output_tokens": 11065000
+    },
+    {
+     "breakdowns": 3,
+     "k": 4,
+     "solved": 11.69,
+     "input_tokens": 21961590,
+     "output_tokens": 11392729
+    },
+    {
+     "breakdowns": 3,
+     "k": 5,
+     "solved": 11.69,
+     "input_tokens": 22470315,
+     "output_tokens": 11715531
+    },
+    {
+     "breakdowns": 3,
+     "k": 6,
+     "solved": 11.69,
+     "input_tokens": 22956315,
+     "output_tokens": 11961513
+    },
+    {
+     "breakdowns": 3,
+     "k": 7,
+     "solved": 11.69,
+     "input_tokens": 23509029,
+     "output_tokens": 12244318
+    },
+    {
+     "breakdowns": 3,
+     "k": 8,
+     "solved": 11.69,
+     "input_tokens": 24020761,
+     "output_tokens": 12450070
+    },
+    {
+     "breakdowns": 4,
+     "k": 1,
+     "solved": 11.0,
+     "input_tokens": 25009650,
+     "output_tokens": 12575449
+    },
+    {
+     "breakdowns": 4,
+     "k": 2,
+     "solved": 11.0,
+     "input_tokens": 25477808,
+     "output_tokens": 13056985
+    },
+    {
+     "breakdowns": 4,
+     "k": 3,
+     "solved": 13.0,
+     "input_tokens": 25810142,
+     "output_tokens": 13348295
+    },
+    {
+     "breakdowns": 4,
+     "k": 4,
+     "solved": 13.0,
+     "input_tokens": 26405511,
+     "output_tokens": 13745771
+    },
+    {
+     "breakdowns": 4,
+     "k": 5,
+     "solved": 13.0,
+     "input_tokens": 27018514,
+     "output_tokens": 14128159
+    },
+    {
+     "breakdowns": 4,
+     "k": 6,
+     "solved": 13.0,
+     "input_tokens": 27610554,
+     "output_tokens": 14435981
+    },
+    {
+     "breakdowns": 4,
+     "k": 7,
+     "solved": 13.0,
+     "input_tokens": 28270910,
+     "output_tokens": 14776441
+    },
+    {
+     "breakdowns": 4,
+     "k": 8,
+     "solved": 13.0,
+     "input_tokens": 28889442,
+     "output_tokens": 15028971
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,28 @@
+data:
+  agent:
+    shared_breakdowns: false
+    sources:
+      8b: "/home/melanieli22/pf_icml_scratch/results/full85s_random_cut/dump/minified"
+  load_code: false
+policy:
+  type: "fixed"
+  sweep_params:
+    full_proof_budget:
+      8b: [0]
+    max_breakdowns: [1, 2, 3, 4]
+    breakdown_proof_budget:
+      8b: [1]
+    max_corrections: [0, 1, 2, 3, 4, 5, 6, 7]
+simulation:
+  n_seeds: 32
+  shared_seeds: true
+  max_steps: 5000
+  max_problems: null
+  num_workers: 16
+  parallel_over: "configs"
+output:
+  name: "pf_fixeds_random_cut"
+  dir: "results/simulations"
+  overwrite: true
+  save_trajectories: false
+  save_summary: true
